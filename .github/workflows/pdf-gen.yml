@@ -131,15 +131,15 @@ jobs:
 
       - name: Generate PDF
         run: |
+      
           pandoc mnscrpt.md \
             -o mnscrpt.pdf \
             --pdf-engine=typst \
             --template=/tmp/default.typst \
             -V template=_master-thesis-template/template/custom.typ \
             --resource-path=.:img \
-            --citeproc \
             --filter pandoc-crossref \
-            --number-sections \
+            --citeproc \
             --bibliography="refs/refs.bib" \
             --csl="_master-thesis-template/refs/aip.csl" \
             -M "figPrefix:Fig."
