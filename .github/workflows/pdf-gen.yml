@@ -143,6 +143,7 @@ jobs:
             --number-sections \
             --bibliography="refs/refs.bib" \
             --csl="_master-thesis-template/refs/aip.csl" \
+            -M 'figureTemplate:$$t$$' \
             -M "figPrefix:図" \
             -M "eqnPrefix:式"
             
