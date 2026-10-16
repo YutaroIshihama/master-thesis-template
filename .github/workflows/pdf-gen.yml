@@ -12,9 +12,16 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
+      - name: Checkout student repository
         uses: actions/checkout@v7
 
+      - name: Checkout master thesis template
+        uses: actions/checkout@v7
+        with:
+          repository: YutaroIshihama/master-thesis-template
+          ref: main
+          path: _master-thesis-template
+          
       - name: Install dependencies
         run: |
           sudo apt-get update
