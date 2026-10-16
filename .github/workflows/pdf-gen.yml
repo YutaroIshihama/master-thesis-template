@@ -37,16 +37,14 @@ jobs:
 
       - name: Install pandoc-crossref
         run: |
-          CROSSREF_URL=$(curl -s https://api.github.com/repos/lierdakil/pandoc-crossref/releases/latest \
-            | grep browser_download_url \
-            | grep linux-x86_64.tar.xz \
-            | cut -d'"' -f4 \
-            | head -n 1)
+          CROSSREF_URL=$(curl -fsSL https://api.github.com/repos/lierdakil/pandoc-crossref/releases/latest \
+            | python3 -c 'import json,sys; d=json.load(sys.stdin); print(next(x["browser_download_url"] for x in d["assets"] if x["name"] == "pandoc-crossref-Linux-X64.tar.xz"))')
+          echo "Downloading: $CROSSREF_URL"
           wget -q "$CROSSREF_URL" -O pandoc-crossref.tar.xz
           tar -xf pandoc-crossref.tar.xz
           sudo install -m 755 pandoc-crossref /usr/local/bin/pandoc-crossref
           pandoc-crossref --version
-
+          
       - name: Prepare Pandoc Typst metadata bridge
         run: |
           pandoc -D typst > /tmp/default.typst
