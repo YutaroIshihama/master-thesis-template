@@ -1,6 +1,7 @@
 name: Generate Master Thesis PDF
 
 on:
+  workflow_call:
   workflow_dispatch:
 
 permissions:
