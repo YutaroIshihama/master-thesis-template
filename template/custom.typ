@@ -261,7 +261,7 @@
   // ============================================================
 
   show <refs>: it => {
-    set block(spacing: 2em)
+    set block(spacing: 1.2em)
     it
   }
 
