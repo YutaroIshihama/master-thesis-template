@@ -172,21 +172,21 @@
   set heading(numbering: "1.1.1")
 
   show heading.where(level: 1): it => {
-    pagebreak(weak: true)
+  pagebreak(weak: true)
 
-    block(
-      above: 10mm,
-      below: 8mm,
-    )[
-      #align(center)[
-        #text(size: 18pt, weight: "bold")[
-          第#numbering("1", counter(heading).at(it.location()).first())章
-          #h(1em)
-          #it.body
-        ]
+  block(
+    above: 10mm,
+    below: 8mm,
+  )[
+    #align(center)[
+      #text(size: 18pt, weight: "bold")[
+        第#numbering("1", ..counter(heading).at(it.location()))章
+        #h(1em)
+        #it.body
       ]
     ]
-  }
+  ]
+}
 
   show heading.where(level: 2): it => {
     block(
