@@ -138,14 +138,10 @@ jobs:
             --template=/tmp/default.typst \
             -V template=_master-thesis-template/template/custom.typ \
             --resource-path=.:img \
-            --filter pandoc-crossref \
             --citeproc \
             --number-sections \
             --bibliography="refs/refs.bib" \
             --csl="_master-thesis-template/refs/aip.csl" \
-            -M 'figureTemplate:$$t$$' \
-            -M "figPrefix:図" \
-            -M "eqnPrefix:式"
             
       - name: Upload PDF
         uses: actions/upload-artifact@v7
