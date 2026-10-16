@@ -138,9 +138,11 @@ jobs:
             -V template=_master-thesis-template/template/custom.typ \
             --resource-path=.:img \
             --citeproc \
+            --filter pandoc-crossref \
             --number-sections \
             --bibliography="refs/refs.bib" \
             --csl="_master-thesis-template/refs/aip.csl" \
+            -M "figPrefix:Fig."
             
       - name: Upload PDF
         uses: actions/upload-artifact@v7
