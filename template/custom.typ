@@ -264,7 +264,7 @@
 
   show bibliography: set par(
     leading: 1.0em,
-    spacing: 0.5em,
+    spacing: 1.0em,
     first-line-indent: 0em,
   )
 
