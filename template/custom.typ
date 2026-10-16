@@ -74,7 +74,6 @@
   set par(
   justify: true,
   leading: 0.8em,
-  spacing: 0.8em,
   first-line-indent: 1em,
   )
 
@@ -257,6 +256,12 @@
     numbering: "(1.1)",
   )
 
+  show bibliography: set text(0.85em)
+  show bibliography: set par(
+    leading: 0.65em,
+    justify: false,
+    linebreaks: auto,
+  )
   // ============================================================
   // Main text
   // ============================================================
