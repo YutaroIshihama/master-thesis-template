@@ -29,11 +29,10 @@ jobs:
 
       - name: Install Pandoc
         run: |
-          PANDOC_VERSION=$(curl -s https://api.github.com/repos/jgm/pandoc/releases/latest | grep '"tag_name"' | cut -d'"' -f4)
-          wget -q "https://github.com/jgm/pandoc/releases/download/${PANDOC_VERSION}/pandoc-${PANDOC_VERSION}-1-amd64.deb"
-          sudo dpkg -i "pandoc-${PANDOC_VERSION}-1-amd64.deb"
+          wget -q https://github.com/jgm/pandoc/releases/download/3.12.1/pandoc-3.12.1-1-amd64.deb
+          sudo dpkg -i pandoc-3.12.1-1-amd64.deb
           pandoc --version
-
+          
       - name: Install Typst
         run: |
           TYPST_VERSION=$(curl -s https://api.github.com/repos/typst/typst/releases/latest | grep '"tag_name"' | cut -d'"' -f4)
