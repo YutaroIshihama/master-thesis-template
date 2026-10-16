@@ -169,57 +169,50 @@
   // Headings
   // ============================================================
 
-  set heading(numbering: "1.1.1")
+  set heading(numbering: (..nums) => {
+    nums.pos().map(str).join(".")
+  })
 
   show heading.where(level: 1): it => {
     pagebreak(weak: true)
+
+    set text(weight: "bold", size: 18pt)
 
     block(
       above: 10mm,
       below: 8mm,
     )[
-      #context {
-        let nums = counter(heading).get()
-        align(center)[
-          #text(size: 18pt, weight: "bold")[
-            第#nums.first()章
-            #h(1em)
-            #it.body
-          ]
-        ]
-      }
+      #align(center)[
+        第#numbering(it.numbering, ..counter(heading).at(it.location()))章
+        #h(1em)
+        #it.body
+      ]
     ]
   }
 
   show heading.where(level: 2): it => {
+    set text(weight: "bold", size: 14pt)
+
     block(
       above: 1.5em,
       below: 0.8em,
     )[
-      #context {
-        let nums = counter(heading).get()
-        text(size: 14pt, weight: "bold")[
-          #nums.at(0).#nums.at(1)
-          #h(0.8em)
-          #it.body
-        ]
-      }
+      #numbering(it.numbering, ..counter(heading).at(it.location()))
+      #h(0.8em)
+      #it.body
     ]
   }
 
   show heading.where(level: 3): it => {
+    set text(weight: "bold", size: 12pt)
+
     block(
       above: 1.2em,
       below: 0.6em,
     )[
-      #context {
-        let nums = counter(heading).get()
-        text(size: 12pt, weight: "bold")[
-          #nums.at(0).#nums.at(1).#nums.at(2)
-          #h(0.8em)
-          #it.body
-        ]
-      }
+      #numbering(it.numbering, ..counter(heading).at(it.location()))
+      #h(0.8em)
+      #it.body
     ]
   }
 
