@@ -129,11 +129,21 @@
     #v(1fr)
 
     #text(size: 12pt)[
-      #university \
-      #graduate-school \
-      #if department != "" { [#department \] }
-      #if course != "" { [#course \] }
-      #if laboratory != "" { [#laboratory \] }
+      #university
+      #linebreak()
+      #graduate-school
+      #if department != "" {
+        [#department]
+        linebreak()
+      }
+      #if course != "" {
+        [#course]
+        linebreak()
+      }
+      #if laboratory != "" {
+        [#laboratory]
+        linebreak()
+      }
     ]
 
     #v(7mm)
@@ -153,9 +163,8 @@
     ]
 
     #v(8mm)
-  ]
-
-  pagebreak()
+    
+    pagebreak()
 
   // ============================================================
   // Page numbering
