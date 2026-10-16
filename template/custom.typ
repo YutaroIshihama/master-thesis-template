@@ -72,12 +72,13 @@
   )
 
   set par(
-    justify: true,
-    leading: 0.8em,
-    first-line-indent: 1em,
+  justify: true,
+  leading: 0.8em,
+  spacing: 0.8em,
+  first-line-indent: 1em,
   )
 
-  // ============================================================
+// ============================================================
   // Title page
   // ============================================================
 
@@ -254,18 +255,6 @@
 
   set math.equation(
     numbering: "(1.1)",
-  )
-
-  // ============================================================
-  // Bibliography
-  // ============================================================
-
-  show bibliography: set text(size: 10.5pt)
-
-  show bibliography: set par(
-    leading: 1.0em,
-    spacing: 1.0em,
-    first-line-indent: 0em,
   )
 
   // ============================================================
