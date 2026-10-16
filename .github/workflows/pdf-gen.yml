@@ -1,0 +1,149 @@
+name: Generate Master Thesis PDF
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v7
+
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y wget xz-utils fonts-noto-cjk
+
+      - name: Install Pandoc
+        run: |
+          PANDOC_VERSION=$(curl -s https://api.github.com/repos/jgm/pandoc/releases/latest | grep '"tag_name"' | cut -d'"' -f4)
+          wget -q "https://github.com/jgm/pandoc/releases/download/${PANDOC_VERSION}/pandoc-${PANDOC_VERSION}-1-amd64.deb"
+          sudo dpkg -i "pandoc-${PANDOC_VERSION}-1-amd64.deb"
+          pandoc --version
+
+      - name: Install Typst
+        run: |
+          TYPST_VERSION=$(curl -s https://api.github.com/repos/typst/typst/releases/latest | grep '"tag_name"' | cut -d'"' -f4)
+          wget -q "https://github.com/typst/typst/releases/download/${TYPST_VERSION}/typst-x86_64-unknown-linux-musl.tar.xz"
+          tar -xf "typst-x86_64-unknown-linux-musl.tar.xz"
+          sudo cp "typst-x86_64-unknown-linux-musl/typst" /usr/local/bin/typst
+          typst --version
+
+      - name: Install pandoc-crossref
+        run: |
+          CROSSREF_URL=$(curl -s https://api.github.com/repos/lierdakil/pandoc-crossref/releases/latest \
+            | grep browser_download_url \
+            | grep linux-x86_64.tar.xz \
+            | cut -d'"' -f4 \
+            | head -n 1)
+          wget -q "$CROSSREF_URL" -O pandoc-crossref.tar.xz
+          tar -xf pandoc-crossref.tar.xz
+          sudo install -m 755 pandoc-crossref /usr/local/bin/pandoc-crossref
+          pandoc-crossref --version
+
+      - name: Prepare Pandoc Typst metadata bridge
+        run: |
+          pandoc -D typst > /tmp/default.typst
+
+          python3 <<'PY'
+          from pathlib import Path
+
+          p = Path("/tmp/default.typst")
+          s = p.read_text()
+
+          marker = "  cols: $if(columns)$$columns$$else$1$endif$,\n  doc,\n)"
+
+          extra = """  cols: $if(columns)$$columns$$else$1$endif$,
+
+          $if(student-id)$
+            student-id: [$student-id$],
+          $endif$
+
+          $if(university)$
+            university: [$university$],
+          $endif$
+
+          $if(graduate-school)$
+            graduate-school: [$graduate-school$],
+          $endif$
+
+          $if(department)$
+            department: [$department$],
+          $endif$
+
+          $if(course)$
+            course: [$course$],
+          $endif$
+
+          $if(laboratory)$
+            laboratory: [$laboratory$],
+          $endif$
+
+          $if(chief-examiner)$
+            chief-examiner: [$chief-examiner$],
+          $endif$
+
+          $if(examiner1)$
+            examiner1: [$examiner1$],
+          $endif$
+
+          $if(examiner2)$
+            examiner2: [$examiner2$],
+          $endif$
+
+          $if(supervisor)$
+            supervisor: [$supervisor$],
+          $endif$
+
+          $if(submission-year)$
+            submission-year: [$submission-year$],
+          $endif$
+
+          $if(submission-month)$
+            submission-month: [$submission-month$],
+          $endif$
+
+          $if(submission-day)$
+            submission-day: [$submission-day$],
+          $endif$
+
+            doc,
+          )"""
+
+          if marker not in s:
+              raise SystemExit(
+                  "ERROR: Pandoc default.typst layout has changed; "
+                  "metadata bridge marker was not found."
+              )
+
+          p.write_text(s.replace(marker, extra, 1))
+          PY
+
+      - name: Generate PDF
+        run: |
+          pandoc mnscrpt.md \
+            -o mnscrpt.pdf \
+            --pdf-engine=typst \
+            --template=/tmp/default.typst \
+            -V template=template/custom.typ \
+            --resource-path=.:img \
+            --filter pandoc-crossref \
+            --citeproc \
+            --number-sections \
+            --bibliography="refs/refs.bib" \
+            --csl="refs/aip.csl" \
+            -M "figureTitle:Fig." \
+            -M "figPrefix:Fig." \
+            -M "eqnPrefix:Eq."
+
+      - name: Upload PDF
+        uses: actions/upload-artifact@v7
+        with:
+          name: master-thesis
+          path: mnscrpt.pdf
+          if-no-files-found: error
