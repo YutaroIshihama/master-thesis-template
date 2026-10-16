@@ -99,7 +99,7 @@
     #v(6mm)
 
     #text(size: 20pt, weight: "bold")[
-      #if title != none { title }
+      #title
     ]
 
     #v(20mm)
@@ -109,7 +109,6 @@
       align: (left, left),
       stroke: none,
       inset: 3pt,
-
       [主査], [#chief-examiner],
       [委員], [#examiner1],
       [委員], [#examiner2],
@@ -122,28 +121,17 @@
       align: (left, left),
       stroke: none,
       inset: 3pt,
-
       [指導教員], [#supervisor],
     )
 
-    #v(1fr)
+    #v(15mm)
 
     #text(size: 12pt)[
-      #university
-      #linebreak()
-      #graduate-school
-      #if department != "" {
-        [#department]
-        linebreak()
-      }
-      #if course != "" {
-        [#course]
-        linebreak()
-      }
-      #if laboratory != "" {
-        [#laboratory]
-        linebreak()
-      }
+      #university \
+      #graduate-school \
+      #department \
+      #course \
+      #laboratory
     ]
 
     #v(7mm)
@@ -157,13 +145,13 @@
     #v(8mm)
 
     #text(size: 12pt)[
-      #submission-year 年
-      #submission-month 月
-      #submission-day 日 提出
+      #submission-year 年 #submission-month 月 #submission-day 日 提出
     ]
 
     #v(8mm)
-    
+  ]
+
+  pagebreak()    
     pagebreak()
 
   // ============================================================
