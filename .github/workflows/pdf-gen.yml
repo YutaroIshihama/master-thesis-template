@@ -129,21 +129,23 @@ jobs:
           p.write_text(s.replace(marker, extra, 1))
           PY
 
-      - name: Debug complete Typst
+      - name: Generate PDF
         run: |
           pandoc mnscrpt.md \
-            -o debug.typ \
+            -o mnscrpt.pdf \
+            --pdf-engine=typst \
             --template=/tmp/default.typst \
             -V template=_master-thesis-template/template/custom.typ \
             --resource-path=.:img \
             --filter pandoc-crossref \
             --citeproc \
             --bibliography="refs/refs.bib" \
-            --csl="_master-thesis-template/refs/aip.csl"
+            --csl="_master-thesis-template/refs/aip.csl" \
+            -M "figPrefix:図"
 
-          tail -n 200 debug.typ
-           - name: Upload debug Typst
-           uses: actions/upload-artifact@v4
-          with:
-            name: debug-typst
-            path: debug.typ
+      - name: Upload PDF
+        uses: actions/upload-artifact@v7
+        with:
+          name: master-thesis
+          path: mnscrpt.pdf
+          if-no-files-found: error
