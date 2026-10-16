@@ -136,17 +136,17 @@ jobs:
             -o mnscrpt.pdf \
             --pdf-engine=typst \
             --template=/tmp/default.typst \
-            -V template=template/custom.typ \
+            -V template=_master-thesis-template/template/custom.typ \
             --resource-path=.:img \
             --filter pandoc-crossref \
             --citeproc \
             --number-sections \
             --bibliography="refs/refs.bib" \
-            --csl="refs/aip.csl" \
+            --csl="_master-thesis-template/refs/aip.csl" \
             -M "figureTitle:Fig." \
             -M "figPrefix:Fig." \
             -M "eqnPrefix:Eq."
-
+            
       - name: Upload PDF
         uses: actions/upload-artifact@v7
         with:
