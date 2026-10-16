@@ -178,13 +178,16 @@
       above: 10mm,
       below: 8mm,
     )[
-      #align(center)[
-        #text(size: 18pt, weight: "bold")[
-          第#it.counter.display(it.numbering)章
-          #h(1em)
-          #it.body
+      #context {
+        let nums = counter(heading).get()
+        align(center)[
+          #text(size: 18pt, weight: "bold")[
+            第#nums.first()章
+            #h(1em)
+            #it.body
+          ]
         ]
-      ]
+      }
     ]
   }
 
@@ -193,11 +196,14 @@
       above: 1.5em,
       below: 0.8em,
     )[
-      #text(size: 14pt, weight: "bold")[
-        #it.counter.display(it.numbering)
-        #h(0.8em)
-        #it.body
-      ]
+      #context {
+        let nums = counter(heading).get()
+        text(size: 14pt, weight: "bold")[
+          #nums.at(0).#nums.at(1)
+          #h(0.8em)
+          #it.body
+        ]
+      }
     ]
   }
 
@@ -206,11 +212,14 @@
       above: 1.2em,
       below: 0.6em,
     )[
-      #text(size: 12pt, weight: "bold")[
-        #it.counter.display(it.numbering)
-        #h(0.8em)
-        #it.body
-      ]
+      #context {
+        let nums = counter(heading).get()
+        text(size: 12pt, weight: "bold")[
+          #nums.at(0).#nums.at(1).#nums.at(2)
+          #h(0.8em)
+          #it.body
+        ]
+      }
     ]
   }
 
