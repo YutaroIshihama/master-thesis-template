@@ -143,9 +143,8 @@ jobs:
             --number-sections \
             --bibliography="refs/refs.bib" \
             --csl="_master-thesis-template/refs/aip.csl" \
-            -M "figureTitle:Fig." \
-            -M "figPrefix:Fig." \
-            -M "eqnPrefix:Eq."
+            -M "figPrefix:図" \
+            -M "eqnPrefix:式"
             
       - name: Upload PDF
         uses: actions/upload-artifact@v7
