@@ -178,13 +178,24 @@
 
     set text(weight: "bold", size: 18pt)
 
+    let chapter-prefix = if it.numbering != none {
+      [
+        第#numbering(
+          it.numbering,
+          ..counter(heading).at(it.location())
+        )章
+        #h(1em)
+      ]
+    } else {
+      []
+    }
+
     block(
       above: 10mm,
       below: 8mm,
     )[
       #align(center)[
-        第#numbering(it.numbering, ..counter(heading).at(it.location()))章
-        #h(1em)
+        #chapter-prefix
         #it.body
       ]
     ]
@@ -193,12 +204,23 @@
   show heading.where(level: 2): it => {
     set text(weight: "bold", size: 14pt)
 
+    let prefix = if it.numbering != none {
+      [
+        #numbering(
+          it.numbering,
+          ..counter(heading).at(it.location())
+        )
+        #h(0.8em)
+      ]
+    } else {
+      []
+    }
+
     block(
       above: 1.5em,
       below: 0.8em,
     )[
-      #numbering(it.numbering, ..counter(heading).at(it.location()))
-      #h(0.8em)
+      #prefix
       #it.body
     ]
   }
@@ -206,12 +228,23 @@
   show heading.where(level: 3): it => {
     set text(weight: "bold", size: 12pt)
 
+    let prefix = if it.numbering != none {
+      [
+        #numbering(
+          it.numbering,
+          ..counter(heading).at(it.location())
+        )
+        #h(0.8em)
+      ]
+    } else {
+      []
+    }
+
     block(
       above: 1.2em,
       below: 0.6em,
     )[
-      #numbering(it.numbering, ..counter(heading).at(it.location()))
-      #h(0.8em)
+      #prefix
       #it.body
     ]
   }
