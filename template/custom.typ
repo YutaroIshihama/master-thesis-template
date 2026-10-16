@@ -180,7 +180,7 @@
     )[
       #align(center)[
         #text(size: 18pt, weight: "bold")[
-          第#counter(heading).display("1")章
+          第#numbering("1", counter(heading).at(it.location()).first())章
           #h(1em)
           #it.body
         ]
@@ -194,7 +194,7 @@
       below: 0.8em,
     )[
       #text(size: 14pt, weight: "bold")[
-        #counter(heading).display("1.1")
+        #numbering("1.1", ..counter(heading).at(it.location()))
         #h(0.8em)
         #it.body
       ]
@@ -207,7 +207,7 @@
       below: 0.6em,
     )[
       #text(size: 12pt, weight: "bold")[
-        #counter(heading).display("1.1.1")
+        #numbering("1.1.1", ..counter(heading).at(it.location()))
         #h(0.8em)
         #it.body
       ]
